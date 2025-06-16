@@ -5,6 +5,7 @@ export const getContact = async (contactId) => {
     const contact = await Contact.findById(contactId);
     return contact;
 };
+
 export const getContacts = async () => {
     const contacts = await Contact.find();
     return contacts;
@@ -23,7 +24,7 @@ export const updateContact = async (contactId, payload, options) => {
         runValidators: true,
     });
     if (!result.value) {
-        throw createHttpError(404, "Contact not found!");
+        throw createHttpError(404, "Contact not found");
     }
     return {
         contact: result.value,
