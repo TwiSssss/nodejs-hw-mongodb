@@ -11,4 +11,4 @@ export const createContactSchema = Joi.object({
     contactType: Joi.string().valid("personal", "home", "work").required(),
 });
 
-export const updateContactSchema = createContactSchema.fork(["name", "phoneNumber"], (field) => field.optional());
+export const updateContactSchema = createContactSchema.fork(["name", "phoneNumber", "contactType"], (field) => field.optional());
