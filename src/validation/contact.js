@@ -7,6 +7,8 @@ export const createContactSchema = Joi.object({
         .pattern(/^\+?\d{11}$/)
         .required(),
     email: Joi.string().email().allow(null),
+    isFavourite: Joi.boolean(),
+    contactType: Joi.string().valid("personal", "home", "work").required(),
 });
 
 export const updateContactSchema = createContactSchema.fork(["name", "phoneNumber"], (field) => field.optional());
