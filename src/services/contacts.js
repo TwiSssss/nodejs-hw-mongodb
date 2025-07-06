@@ -2,6 +2,7 @@ import { Contact } from "../db/models/contacts.js";
 import createHttpError from "http-errors";
 import { SORT } from "../constants/index.js";
 import { createPaginationMetadata } from "../utils/PaginationData.js";
+import { saveFile } from "../utils/saveFile.js";
 
 export const getContact = async (contactId, userId) => {
     const contact = await Contact.findOne({ _id: contactId, userId });
@@ -65,4 +66,29 @@ export const deleteContactById = async (contactId, userId) => {
         throw createHttpError(404, "Contact not found");
     }
     return result;
+};
+
+export const upsertContact = async (contactId, payload) => {
+    const contact = await Contact.findById(contactId);
+
+    if (contact) {
+        contact.set(payload);
+        return { isNew: false, contact: await contact.save() };
+    } else {
+        return { isNew: true, contact: await contact.create(payload) };
+    }
+};
+
+export const uploadContactAvatar = async (contactId, file) => {
+    const url = await saveFile(file);
+
+    const contact = await Contact.findByIdAndUpdate(
+        contactId,
+        {
+            photo: url,
+        },
+        { new: true }
+    );
+
+    return contact;
 };

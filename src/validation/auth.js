@@ -9,3 +9,10 @@ export const loginUserValidationSchema = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
 });
+export const requestResetEmailValidationSchema = Joi.object({
+  email: Joi.string().email().required(),
+});
+export const resetPasswordValidationSchema = Joi.object({
+  password: Joi.string().required(),
+  token: Joi.string().required(),
+});
