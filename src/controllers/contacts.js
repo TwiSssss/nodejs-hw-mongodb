@@ -42,8 +42,7 @@ export const getContactsByIdController = async (req, res, next) => {
 export const createContactController = async (req, res) => {
     if (typeof req.body.isFavourite === "string") {
         const val = req.body.isFavourite.toLowerCase();
-        req.body.isFavourite = val === "true" || val === "1" || val === "on";
-        console.log("Converted isFavourite:", req.body.isFavourite, typeof req.body.isFavourite);
+        req.body.isFavourite = val === "true";
     }
     let photoUrl = null;
 
