@@ -40,6 +40,11 @@ export const getContactsByIdController = async (req, res, next) => {
 };
 
 export const createContactController = async (req, res) => {
+    if (typeof req.body.isFavourite === "string") {
+        const val = req.body.isFavourite.toLowerCase();
+        req.body.isFavourite = val === "true" || val === "1" || val === "on";
+        console.log("Converted isFavourite:", req.body.isFavourite, typeof req.body.isFavourite);
+    }
     let photoUrl = null;
 
     if (req.file) {
@@ -80,13 +85,13 @@ export const patchContactController = async (req, res) => {
 };
 
 export const uploadContactAvatarController = async (req, res) => {
-    const { studentId } = req.params;
-    const student = await uploadContactAvatar(studentId, req.file);
+    const { contactId } = req.params;
+    const contact = await uploadContactAvatar(contactId, req.file);
 
     return res.json({
-        message: `Successfully updated contact avatar with id ${studentId}!`,
+        message: `Successfully updated contact avatar with id ${contactId}!`,
         status: 200,
-        data: student,
+        data: contact,
     });
 };
 
