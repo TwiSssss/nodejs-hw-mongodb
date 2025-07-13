@@ -40,10 +40,7 @@ export const getContactsByIdController = async (req, res, next) => {
 };
 
 export const createContactController = async (req, res) => {
-    if (typeof req.body.isFavourite === "string") {
-        const val = req.body.isFavourite.toLowerCase();
-        req.body.isFavourite = val === "true";
-    }
+   
     let photoUrl = null;
 
     if (req.file) {
